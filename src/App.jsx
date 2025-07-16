@@ -1,20 +1,39 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
 import Market from "./pages/Market";
 import Portfolio from "./pages/Portfolio";
 
 const App = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+
   return (
     <div className="flex">
       <Sidebar />
-      <div className="ml-0 sm:ml-60 w-full p-6">
+      <div className="ml-0 sm:ml-60 w-full">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/market" element={<Market />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                selectedCurrency={selectedCurrency}
+                setSelectedCurrency={setSelectedCurrency}
+              />
+            }
+          />
+          <Route
+            path="/market"
+            element={
+              <Market
+                searchQuery={searchQuery}
+                selectedCurrency={selectedCurrency}
+              />
+            }
+          />
           <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
       </div>
