@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const CoinList = () => {
-    // usestat to store coin data
+const CoinList = ({ selectedCurrency, searchTerm }) => {
   const [coins, setCoins] = useState([]);
 
-  //useffect to run API when component loads
   useEffect(() => {
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd")
+      .get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}`)
       .then((response) => {
         setCoins(response.data);
       })
       .catch((error) => {
         console.error("❌ Error fetching data:", error);
       });
-  }, []);
+  }, [selectedCurrency]);
+
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-
-      {coins.map((coin) => (
+      {filteredCoins.map((coin) => (
         <div
           key={coin.id}
           className="bg-gray-800 rounded-lg p-4 shadow-md hover:scale-105 transition-transform"
@@ -33,7 +34,10 @@ const CoinList = () => {
             </div>
           </div>
           <div className="mt-4 text-white">
-            <p>Price: ${coin.current_price.toLocaleString()}</p>
+            <p>
+              Price: {coin.current_price}{" "}
+              {selectedCurrency.toUpperCase()}
+            </p>
             <p
               className={
                 coin.price_change_percentage_24h > 0
@@ -41,7 +45,6 @@ const CoinList = () => {
                   : "text-red-400"
               }
             >
-        
               24h Change: {coin.price_change_percentage_24h.toFixed(2)}%
             </p>
           </div>
