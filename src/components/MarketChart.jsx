@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import numeral from "numeral";
 import {
   PieChart, Pie, Cell,
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -21,16 +22,20 @@ const MarketChart = ({ selectedCurrency }) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
       {/* Bar Chart */}
       <div className="bg-gray-800 p-4 rounded-lg shadow-md">
-        <h3 className="text-white text-lg font-semibold mb-3">Top 5 Market Cap</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={topCoins}>
-            <XAxis dataKey="name" stroke="#ccc" />
-            <YAxis stroke="#ccc" />
-            <Tooltip />
-            <Bar dataKey="market_cap" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height={250}>
+  <BarChart data={topCoins}>
+    <XAxis dataKey="name" stroke="#ccc" />
+    <YAxis
+      stroke="#ccc"
+      tickFormatter={(value) => numeral(value).format("0.00a").toUpperCase()}
+    />
+    <Tooltip
+      formatter={(value) => numeral(value).format("$0,0.00a").toUpperCase()}
+    />
+    <Bar dataKey="market_cap" fill="#a855f7" />
+  </BarChart>
+</ResponsiveContainer>
+</div>
 
       {/* Pie Chart */}
       <div className="bg-gray-800 p-4 rounded-lg shadow-md">
