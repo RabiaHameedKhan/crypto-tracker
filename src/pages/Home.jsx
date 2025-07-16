@@ -7,7 +7,7 @@ const Home = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("usd");
 
   return (
-    <div className="p-6">
+    <div className="p-6 " >
       <h2 className="text-3xl font-semibold text-black mb-4">Live Crypto Prices</h2>
       <SearchBar
         searchQuery={searchQuery}

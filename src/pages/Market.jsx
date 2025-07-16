@@ -22,7 +22,7 @@ const Market = ({ selectedCurrency, searchQuery }) => {
   );
 
   return (
-    <div className="p-6 text-white">
+    <div className="p-6 text-white ">
       <h2 className="text-3xl font-semibold mb-6 text-black">Market Overview</h2>
           <MarketChart selectedCurrency={selectedCurrency} />
       <div className="overflow-x-auto bg-gray-800 rounded-lg shadow">
